@@ -1,0 +1,44 @@
+E-Commerce System User Guide
+---------------------------
+
+1. Getting Started:
+   - Register a new account or log in if you already have one
+   - Browse products on the homepage
+
+2. Product Features:
+   - View product details by clicking on any product
+   - Like/unlike products by clicking the heart icon
+   - Search for products using the search bar
+
+3. Shopping Cart:
+   - Add products to cart from product listings
+   - View/update your cart from the cart icon
+   - Remove items or adjust quantities in cart
+   - Proceed to checkout when ready
+
+4. User Account:
+   - View your account details
+   - See products you've added
+   - View your order history
+   - Update your profile information
+
+5. Seller Features:
+   - Add new products via "Add Product" option
+   - View orders for your products in your account
+   - Remove products you've added
+
+6. Recommendations:
+   - The system provides personalized recommendations based on:
+     * Products you've liked
+     * Products you've viewed
+     * Current trends
+
+7. Admin Notes:
+   - First registered user becomes the default admin
+   - All product images are stored in static/uploads/
+   - Database automatically creates necessary collections
+
+For any issues, please check:
+- MongoDB is running
+- Uploads directory exists and is writable
+- All required packages are installed

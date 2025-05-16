@@ -1,0 +1,8 @@
+Flask
+Flask-PyMongo
+pymongo
+bson
+Werkzeug
+numpy
+pandas
+scikit-learn

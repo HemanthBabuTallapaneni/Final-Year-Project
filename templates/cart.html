@@ -1,0 +1,58 @@
+<!-- templates/cart.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2 class="mb-0">Shopping Cart</h2>
+    </div>
+    <div class="card-body">
+        {% if cart_items %}
+            <div class="list-group list-group-flush">
+                {% for item in cart_items %}
+                <div class="list-group-item">
+                    <div class="row align-items-center">
+                        <!-- Product Image -->
+                        <div class="col-md-2">
+                            <img src="{{ item.product.image_url }}" alt="{{ item.product.name }}" 
+                                 class="img-fluid rounded" style="max-height: 100px; object-fit: cover;">
+                        </div>
+
+                        <!-- Product Name and Price -->
+                        <div class="col-md-4">
+                            <h5 class="mb-1">{{ item.product.name }}</h5>
+                            <p class="mb-1 text-muted">₹{{ "%.2f"|format(item.product.price) }} x {{ item.quantity }}</p>
+                        </div>
+
+                        <!-- Total Price -->
+                        <div class="col-md-2 text-end">
+                            <span class="h5">₹{{ "%.2f"|format(item.total) }}</span>
+                        </div>
+
+                        <!-- Remove Button -->
+                        <div class="col-md-4 text-end">
+                            <form action="{{ url_for('remove_from_cart', product_id=item.product._id) }}" method="POST" class="d-inline">
+                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                    <i class="fas fa-trash me-1"></i>Remove
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Total Price -->
+            <div class="card-footer text-end">
+                <h4>Total: ₹{{ "%.2f"|format(total) }}</h4>
+                <!-- Add a Checkout Button -->
+                <a href="{{ url_for('checkout') }}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-shopping-bag me-2"></i>Proceed to Checkout
+                </a>
+            </div>
+        {% else %}
+            <p class="text-muted">Your cart is empty.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

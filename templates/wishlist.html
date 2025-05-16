@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Wishlist Header Section -->
+<div class="bg-primary text-white p-4 mb-4 rounded">
+    <div class="container-fluid py-3">
+        <h1 class="display-6 fw-bold">My Wishlist</h1>
+        <p class="col-md-8 fs-5">Products you've saved for later</p>
+    </div>
+</div>
+
+{% if products|length > 0 %}
+    <!-- Products Grid -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for product in products %}
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <!-- Product Image -->
+                <div class="position-relative">
+                    <img src="{{ product.image_url|default('https://via.placeholder.com/300', true) }}" 
+                         class="card-img-top" alt="{{ product.name }}" 
+                         style="height: 300px; object-fit: cover;">
+                    {% if product.get('is_new') %}
+                        <span class="position-absolute top-0 end-0 bg-success text-white m-2 px-2 py-1 rounded">New</span>
+                    {% endif %}
+                </div>
+                
+                <!-- Product Info -->
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text text-muted">
+                        {{ product.description[:100] ~ '...' if product.description|length > 100 else product.description }}
+                    </p>
+                    
+                    <!-- Price and Remove Button -->
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="h5 mb-0">₹{{ "%.2f"|format(product.price) }}</span>
+                        <button onclick="removeFromWishlist('{{ product._id }}')" class="btn btn-link text-danger p-0">
+                            <i class="fas fa-heart-broken fs-5"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="d-grid gap-2">
+                        <form action="{{ url_for('add_to_cart', product_id=product._id) }}" method="POST">
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="fas fa-shopping-cart me-2"></i>Add to Cart
+                            </button>
+                        </form>
+                        <button class="btn btn-outline-secondary" data-bs-toggle="modal" 
+                                data-bs-target="#productModal-{{ product._id }}">
+                            <i class="fas fa-info-circle me-2"></i>Quick View
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick View Modal -->
+            <div class="modal fade" id="productModal-{{ product._id }}" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{ product.name }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <img src="{{ product.image_url|default('https://via.placeholder.com/300', true) }}" 
+                                         class="img-fluid rounded" alt="{{ product.name }}">
+                                </div>
+                                <div class="col-md-6">
+                                    <h5 class="mb-3">₹{{ "%.2f"|format(product.price) }}</h5>
+                                    <p>{{ product.description }}</p>
+                                    
+                                    <div class="mb-4">
+                                        <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
+                                            <span class="text-muted">Category</span>
+                                            <span class="fw-bold">{{ product.category }}</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
+                                            <span class="text-muted">Brand</span>
+                                            <span class="fw-bold">{{ product.brand }}</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
+                                            <span class="text-muted">Color</span>
+                                            <span class="fw-bold">{{ product.color }}</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
+                                            <span class="text-muted">Size</span>
+                                            <span class="fw-bold">{{ product.size }}</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
+                                            <span class="text-muted">Inventory</span>
+                                            <span class="fw-bold">{{ product.inventory }}</span>
+                                        </div>
+                                    </div>
+                                    {% if product.get('specifications') %}
+                                        <div class="mb-4">
+                                            <h6 class="fw-bold">Specifications:</h6>
+                                            <ul class="list-group list-group-flush">
+                                                {% for spec in product.specifications %}
+                                                    <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                                                        <i class="fas fa-check text-success me-2"></i>{{ spec }}
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <form action="{{ url_for('add_to_cart', product_id=product._id) }}" method="POST" class="d-inline">
+                                <button type="submit" class="btn btn-primary">Add to Cart</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+{% else %}
+    <!-- Empty Wishlist State -->
+    <div class="text-center py-5">
+        <i class="fas fa-heart text-secondary display-1 mb-3"></i>
+        <h3>Your wishlist is empty</h3>
+        <p class="text-muted">Save items you're interested in by clicking the heart icon on product pages</p>
+        <a href="{{ url_for('index') }}" class="btn btn-outline-primary mt-3">
+            <i class="fas fa-shopping-bag me-2"></i>Browse Products
+        </a>
+    </div>
+{% endif %}
+
+<!-- Custom CSS -->
+<style>
+    .card {
+        transition: transform 0.2s ease-in-out;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+    }
+</style>
+
+<!-- Wishlist JavaScript -->
+<script>
+    function removeFromWishlist(productId) {
+        if (confirm('Remove this product from your wishlist?')) {
+            fetch(`/like/${productId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    window.location.reload(); // Reload the page to update the wishlist
+                } else {
+                    alert('Failed to remove product from wishlist.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    }
+</script>
+{% endblock %}

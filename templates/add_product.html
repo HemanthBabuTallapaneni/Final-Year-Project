@@ -1,0 +1,95 @@
+<!-- templates/add_product.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-4">
+    <h1 class="text-center mb-4">Add a New Product</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form action="{{ url_for('add_product') }}" method="POST" enctype="multipart/form-data">
+                <!-- Product Name -->
+                <div class="mb-3">
+                    <label for="name" class="form-label">Product Name</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+
+                <!-- Product Description -->
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                </div>
+
+                <!-- Product Price -->
+                <div class="mb-3">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="number" class="form-control" id="price" name="price" step="0.01" required>
+                </div>
+
+                <!-- Product Category -->
+                <div class="mb-3">
+                    <label for="category" class="form-label">Category</label>
+                    <select class="form-select" id="category" name="category" required>
+                        <option value="" disabled selected>Select a category</option>
+                        <option value="Sweater">Sweater</option>
+                        <option value="T-Shirt">T-Shirt</option>
+                        <option value="Shirt">Shirt</option>
+                        <option value="Jeans">Jeans</option>
+                        <option value="Jacket">Jacket</option>
+                        <option value="Shoes">Shoes</option>
+                    </select>
+                </div>
+
+                <!-- Product Brand -->
+                <div class="mb-3">
+                    <label for="brand" class="form-label">Brand</label>
+                    <input type="text" class="form-control" id="brand" name="brand">
+                </div>
+
+                <!-- Product Color -->
+                <div class="mb-3">
+                    <label for="color" class="form-label">Color</label>
+                    <select class="form-select" id="color" name="color" required>
+                        <option value="" disabled selected>Select a color</option>
+                        <option value="Black">Black</option>
+                        <option value="Navy">Navy</option>
+                        <option value="White">White</option>
+                        <option value="Indigo">Indigo</option>
+                        <option value="Gray">Gray</option>
+                        <option value="Orange">Orange</option>
+                        <option value="Brown">Brown</option>
+                        <option value="Grey">Grey</option>
+                        <option value="Sky-Blue">Sky-Blue</option>
+                        <option value="Blue">Blue</option>
+                        <option value="Red">Red</option>
+                        <option value="Green">Green</option>
+                    </select>
+                </div>
+
+                <!-- Product Size -->
+                <div class="mb-3">
+                    <label for="size" class="form-label">Size</label>
+                    <input type="text" class="form-select" id="size" name="size" >
+                        
+                </div>
+
+                <!-- Product Inventory -->
+                <div class="mb-3">
+                    <label for="inventory" class="form-label">Inventory</label>
+                    <input type="number" class="form-control" id="inventory" name="inventory" required>
+                </div>
+
+                <!-- Product Image -->
+                <div class="mb-3">
+                    <label for="image" class="form-label">Product Image</label>
+                    <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">Add Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,972 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>INTELLIGENT SHOPPING EXPERIENCE</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+        <style>
+            /* Custom Color Variables */
+            :root {
+                --primary-color: #4F46E5;
+                --secondary-color: #7C3AED;
+                --accent-color: #EC4899;
+                --success-color: #10B981;
+                --warning-color: #F59E0B;
+                --light-bg: #F3F4F6;
+                --dark-text: #1F2937;
+                --card-hover-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            }
+    
+            /* Navbar Styling */
+            .navbar {
+                background: linear-gradient(to right, var(--primary-color), var(--secondary-color)) !important;
+                padding: 1rem 0;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+    
+            .navbar-brand, .nav-link {
+                color: white !important;
+                font-weight: 500;
+            }
+    
+            .navbar .btn-outline-primary {
+                color: white;
+                border-color: white;
+                border-radius: 25px;
+                padding: 0.5rem 1.5rem;
+            }
+    
+            .navbar .btn-outline-primary:hover {
+                background-color: white;
+                color: var(--primary-color);
+            }
+            
+.hero-container {
+    position: relative;
+    background: linear-gradient(135deg, #6bc2fc, #7C3AED);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    padding: 0;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 150%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% -50%, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
+    animation: backgroundShift 15s ease-in-out infinite;
+}
+
+.hero-content {
+    position: relative;
+    padding: 5rem 2rem;
+    z-index: 1;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 1rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 600px;
+    margin-bottom: 2rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease-out 0.2s forwards;
+}
+
+.hero-button {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #4F46E5;
+    background: white;
+    border: none;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease-out 0.4s forwards;
+}
+
+.hero-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    background: #f8f9fa;
+    color: #4338ca;
+}
+
+.floating-shapes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.shape {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    animation: float 20s linear infinite;
+}
+
+.shape:nth-child(1) {
+    width: 100px;
+    height: 100px;
+    top: -50px;
+    right: 10%;
+    animation-delay: 0s;
+}
+
+.shape:nth-child(2) {
+    width: 150px;
+    height: 150px;
+    bottom: -75px;
+    left: 20%;
+    animation-delay: -5s;
+}
+
+.shape:nth-child(3) {
+    width: 70px;
+    height: 70px;
+    top: 40%;
+    right: 15%;
+    animation-delay: -10s;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(100px) rotate(180deg);
+    }
+    100% {
+        transform: translateY(0) rotate(360deg);
+    }
+}
+
+@keyframes backgroundShift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .hero-content {
+        padding: 4rem 1.5rem;
+    }
+}
+
+            /* Card Styling */
+            .card {
+                border: none;
+                border-radius: 15px;
+                transition: all 0.3s ease;
+                background: white;
+                overflow: hidden;
+            }
+    
+            .card:hover {
+                transform: translateY(-5px);
+                box-shadow: var(--card-hover-shadow);
+            }
+    
+            .card-img-top {
+                height: 300px;
+                object-fit: cover;
+                transition: transform 0.3s ease;
+            }
+    
+            .card:hover .card-img-top {
+                transform: scale(1.05);
+            }
+    
+            .card-body {
+                padding: 1.5rem;
+            }
+    
+            /* Price Badge */
+            .price-badge {
+                background: var(--accent-color);
+                color: white;
+                padding: 0.5rem 1rem;
+                border-radius: 25px;
+                font-weight: bold;
+            }
+    
+            /* Like Button */
+            .btn-like {
+                background: none;
+                border: none;
+                transition: transform 0.2s ease;
+            }
+    
+            .btn-like:hover {
+                transform: scale(1.2);
+            }
+    
+            .btn-like .fa-heart {
+                font-size: 1.2rem;
+            }
+    
+            /* Add to Cart Button */
+            .btn-cart {
+                background: var(--primary-color);
+                color: white;
+                border-radius: 25px;
+                padding: 0.8rem 1.5rem;
+                border: none;
+                transition: all 0.3s ease;
+            }
+    
+            .btn-cart:hover {
+                background: var(--secondary-color);
+                transform: translateY(-2px);
+            }
+    
+            /* Quick View Button */
+            .btn-quick-view {
+                background: var(--light-bg);
+                color: var(--dark-text);
+                border-radius: 25px;
+                border: none;
+            }
+    
+            .btn-quick-view:hover {
+                background: var(--dark-text);
+                color: white;
+            }
+    
+            /* Status Badges */
+            .badge-new {
+                background: var(--success-color);
+                color: white;
+                padding: 0.5rem 1rem;
+                border-radius: 15px;
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+            }
+    
+            /* Modal Styling */
+            .modal-content {
+                border-radius: 15px;
+                border: none;
+            }
+    
+            .modal-header {
+                background: var(--light-bg);
+                border-radius: 15px 15px 0 0;
+            }
+    
+            /* Cart Page */
+            .cart-item {
+                background: var(--light-bg);
+                border-radius: 15px;
+                margin-bottom: 1rem;
+                padding: 1rem;
+            }
+    
+            /* Wishlist Page */
+            .wishlist-empty {
+                text-align: center;
+                padding: 4rem 2rem;
+                background: var(--light-bg);
+                border-radius: 15px;
+            }
+    
+            /* Responsive Adjustments */
+            @media (max-width: 768px) {
+                .hero-section {
+                    padding: 2rem 1rem;
+                }
+    
+                .card-img-top {
+                    height: 200px;
+                }
+            }
+    
+            /* Animation Classes */
+            .fade-in {
+                animation: fadeIn 0.5s ease-in;
+            }
+    
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+    
+            /* Product Grid Layout */
+            .product-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 2rem;
+                padding: 1rem;
+            }
+    
+            /* Filter Buttons */
+            .filter-btn {
+                background: var(--light-bg);
+                border: none;
+                border-radius: 20px;
+                padding: 0.5rem 1.5rem;
+                color: var(--dark-text);
+                transition: all 0.3s ease;
+            }
+    
+            .filter-btn:hover, .filter-btn.active {
+                background: var(--primary-color);
+                color: white;
+            }
+    
+            /* Pagination Styling */
+            .pagination .page-link {
+                border: none;
+                border-radius: 50%;
+                margin: 0 0.3rem;
+                color: var(--dark-text);
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+    
+            .pagination .page-item.active .page-link {
+                background: var(--primary-color);
+            }
+            /* Add this to your style section */
+.modal-content {
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.modal-footer {
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Image zoom effect on hover within modal */
+.modal-body .col-md-6:first-child {
+    overflow: hidden;
+}
+
+.modal-body img {
+    transition: transform 0.3s ease-in-out;
+}
+
+.modal-body:hover img {
+    transform: scale(1.03);
+}
+  
+   /* List View Styling */
+.product-list-view .col {
+    width: 100%;
+    max-width: 100%;
+    flex: 0 0 100%;
+}
+
+.product-list-view .card {
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    transition: all 0.3s ease;
+}
+
+.product-list-view .card .position-relative {
+    width: 250px;
+    min-width: 250px;
+    margin-right: 1rem;
+}
+
+.product-list-view .card-img-top {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 15px 0 0 15px;
+}
+
+.product-list-view .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.product-list-view .card:hover {
+    transform: translateX(5px);
+}
+
+.product-list-view .product-details {
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+.product-list-view .product-specs {
+    width: 50%;
+    padding-right: 1rem;
+}
+
+.product-list-view .product-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.product-list-view .product-price-like {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* Animation for list view items */
+.product-list-view .card {
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: slideInFromLeft 0.5s forwards;
+}
+
+.product-list-view .card:nth-child(2n) {
+    animation-delay: 0.1s;
+}
+
+.product-list-view .card:nth-child(3n) {
+    animation-delay: 0.2s;
+}
+
+@keyframes slideInFromLeft {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Animation for grid view items */
+.product-grid-view .card {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideInFromBottom 0.5s forwards;
+}
+
+.product-grid-view .card:nth-child(2n) {
+    animation-delay: 0.1s;
+}
+
+.product-grid-view .card:nth-child(3n) {
+    animation-delay: 0.2s;
+}
+
+@keyframes slideInFromBottom {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Active state for view buttons */
+.view-btn.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Responsive adjustments for list view */
+@media (max-width: 768px) {
+    .product-list-view .card {
+        flex-direction: column;
+    }
+    
+    .product-list-view .card .position-relative {
+        width: 100%;
+        margin-right: 0;
+    }
+    
+    .product-list-view .card-img-top {
+        border-radius: 15px 15px 0 0;
+    }
+    
+    .product-list-view .product-details {
+        flex-direction: column;
+    }
+    
+    .product-list-view .product-specs {
+        width: 100%;
+        padding-right: 0;
+    }
+}
+/* Add these additional animations to your base.html style section */
+
+/* Hover effects for list view */
+.product-list-view .card {
+    position: relative;
+    overflow: hidden;
+}
+
+.product-list-view .card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+    transform-origin: top;
+    z-index: 1;
+}
+
+.product-list-view .card:hover::before {
+    transform: scaleY(1);
+}
+
+.product-list-view .card:hover {
+    transform: translateX(8px);
+    border-radius: 0 15px 15px 0;
+}
+
+/* Button animation for both views */
+.card .btn {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transition: all 0.3s ease;
+}
+
+.card .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    z-index: -1;
+}
+
+.card .btn:hover::before {
+    left: 0;
+    width: 100%;
+}
+
+/* Image hover animation for list view */
+.product-list-view .position-relative {
+    overflow: hidden;
+}
+
+.product-list-view .card-img-top {
+    transition: transform 0.5s ease;
+}
+
+.product-list-view .card:hover .card-img-top {
+    transform: scale(1.08);
+}
+
+/* View transition animation */
+.product-container {
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.product-container.product-grid-view {
+    opacity: 0;
+    animation: fadeGridIn 0.5s forwards;
+}
+
+.product-container.product-list-view {
+    opacity: 0;
+    animation: fadeListIn 0.5s forwards;
+}
+
+@keyframes fadeGridIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeListIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Staggered animation for items */
+.product-list-view .col:nth-child(1) .card {
+    animation-delay: 0.05s;
+}
+.product-list-view .col:nth-child(2) .card {
+    animation-delay: 0.1s;
+}
+.product-list-view .col:nth-child(3) .card {
+    animation-delay: 0.15s;
+}
+.product-list-view .col:nth-child(4) .card {
+    animation-delay: 0.2s;
+}
+.product-list-view .col:nth-child(5) .card {
+    animation-delay: 0.25s;
+}
+.product-list-view .col:nth-child(6) .card {
+    animation-delay: 0.3s;
+}
+.product-list-view .col:nth-child(7) .card {
+    animation-delay: 0.35s;
+}
+.product-list-view .col:nth-child(8) .card {
+    animation-delay: 0.4s;
+}
+
+/* Hover color and text shadow effects for better readability */
+.product-list-view .card:hover .card-title {
+    color: var(--primary-color);
+    text-shadow: 0px 0px 1px rgba(79, 70, 229, 0.1);
+    transition: all 0.3s ease;
+}
+
+/* Price highlight animation */
+.product-list-view .card:hover .h4 {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+
+/* Slick transition for switching between grid and list views */
+.grid-view-content, .list-view-content {
+    transition: opacity 0.3s ease;
+}
+
+.grid-view-content.d-none, .list-view-content.d-none {
+    opacity: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+}
+/* Toast Animation */
+.toast {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        animation: slideIn 0.5s ease-out;
+        z-index: 1050;
+    }
+
+    @keyframes slideIn {
+        from {
+            transform: translate(-50%, -100%);
+            opacity: 0;
+        }
+        to {
+            transform: translate(-50%, -50%);
+            opacity: 1;
+        }
+    }
+
+    .toast-header {
+        background-color: var(--primary-color);
+        color: white;
+        border-radius: 5px 5px 0 0;
+    }
+
+    .toast-body {
+        background-color: white;
+        border-radius: 0 0 5px 5px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+        </style>
+    </head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('index') }}">I-Shop</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <form class="d-flex mx-auto" action="{{ url_for('search') }}" method="GET">
+                    <input class="form-control me-2" type="search" name="q" placeholder="Search products...">
+                    <button class="btn btn-outline-primary" type="submit">Search</button>
+                </form> 
+                <ul class="navbar-nav ms-auto">
+                    <!-- Home Button -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index') }}">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+                    </li>
+                    {% if 'user_id' in session %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('wishlist') }}">
+                                <i class="fas fa-heart"></i> liked
+                            </a>
+                        </li> 
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('cart') }}">
+                                <i class="fas fa-shopping-cart"></i> Cart
+                                <span id="cart-count" class="badge bg-danger rounded-pill">{{ cart_count }}</span>                            </a>
+                        </li>
+                        <!-- Account Link -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('account') }}">
+                                <i class="fas fa-user me-1"></i>Account
+                            </a>
+                        </li>
+                        <!-- Add this inside the navbar, after the "Account" link -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('add_product') }}">
+                                <i class="fas fa-plus"></i> Add Product
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-4">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Add this to the body section, just before the closing </body> tag -->
+    <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" style="display: none;">
+        <div class="toast-header">
+            <strong class="me-auto">Cart Update</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            <span id="toast-message"></span>
+        </div>
+    </div>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function likeProduct(productId) {
+            fetch(`/like/${productId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.querySelector(`#likes-${productId}`).textContent = data.likes;
+                const heartIcon = document.querySelector(`#heart-${productId}`);
+                heartIcon.classList.toggle('text-danger');
+                heartIcon.classList.toggle('text-secondary');
+            });
+        }
+        // This ensures likes are synchronized between the card and modal
+function likeProduct(productId) {
+    fetch(`/like/${productId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Update both the card and modal hearts and counts
+        const cardHeart = document.getElementById(`heart-${productId}`);
+        const cardCount = document.getElementById(`likes-${productId}`);
+        const modalHeart = document.getElementById(`heart-modal-${productId}`);
+        const modalCount = document.getElementById(`likes-modal-${productId}`);
+        
+        if (data.action === 'liked') {
+            cardHeart.classList.add('text-danger');
+            cardHeart.classList.remove('text-secondary');
+            if (modalHeart) {
+                modalHeart.classList.add('text-danger');
+                modalHeart.classList.remove('text-secondary');
+            }
+        } else {
+            cardHeart.classList.remove('text-danger');
+            cardHeart.classList.add('text-secondary');
+            if (modalHeart) {
+                modalHeart.classList.remove('text-danger');
+                modalHeart.classList.add('text-secondary');  
+            }
+        }
+        
+        cardCount.textContent = data.likes;
+        if (modalCount) {
+            modalCount.textContent = data.likes + ' people like this';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+    document.addEventListener('DOMContentLoaded', function() {
+        const gridViewButton = document.querySelector('.btn-group .btn:nth-child(1)');
+        const listViewButton = document.querySelector('.btn-group .btn:nth-child(2)');
+        const productContainer = document.querySelector('.row');
+
+        gridViewButton.addEventListener('click', function() {
+            productContainer.classList.remove('product-list-view');
+            productContainer.classList.add('product-grid-view');
+            gridViewButton.classList.add('active');
+            listViewButton.classList.remove('active');
+        });
+
+        listViewButton.addEventListener('click', function() {
+            productContainer.classList.remove('product-grid-view');
+            productContainer.classList.add('product-list-view');
+            listViewButton.classList.add('active');
+            gridViewButton.classList.remove('active');
+        });
+    });
+
+function viewProduct(productId) {
+    fetch(`/view/${productId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Update the views count in the modal
+        const viewsCount = document.getElementById(`views-${productId}`);
+        if (viewsCount) {
+            viewsCount.textContent = data.views;
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+    function showToast(message) {
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toast-message');
+        toastMessage.textContent = message;
+        toast.style.display = 'block';
+
+        // Hide the toast after 3 seconds
+        setTimeout(() => {
+            toast.style.display = 'none';
+        }, 3000);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check if there are any flash messages
+        const flashMessages = document.querySelectorAll('.alert');
+        flashMessages.forEach(flash => {
+            if (flash.textContent.includes('Product added to cart')) {
+                // Extract the cart count from the flash message
+                const cartCount = flash.textContent.match(/\d+/);
+                if (cartCount) {
+                    showToast(`Product added to cart! Total items: ${cartCount[0]}`);
+                } else {
+                    showToast('Product added to cart!');
+                }
+            }
+        });
+    });
+    function addToCart(productId) {
+        fetch(`/cart/add/${productId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                // Update the cart count in the navbar
+                const cartCountElement = document.getElementById('cart-count');
+                if (cartCountElement) {
+                    cartCountElement.textContent = data.cart_count;
+                }
+
+                // Show a toast notification
+                showToast(`Product added to cart! Total items: ${data.cart_count}`);
+            } else {
+                alert('Failed to add product to cart.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+    </script>
+</body>
+</html>
+

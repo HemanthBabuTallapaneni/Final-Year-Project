@@ -1,0 +1,37 @@
+E-Commerce System Installation Guide
+-----------------------------------
+
+1. Prerequisites:
+   - Python 3.8 or higher
+   - MongoDB installed and running locally
+   - MongoDB Database Tools installed 
+   - pip package manager
+
+2. Clone or download the project files to your local machine
+
+3. Create a virtual environment (recommended):
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+4. Install dependencies:
+   pip install -r requirements.txt
+
+5. Set up MongoDB:
+   - Ensure MongoDB is running on localhost:27017
+   - Create a database named 'e_commerce'
+   - restore the data mongorestore ./db_backup
+   - The system will create necessary collections automatically
+
+
+6. Create uploads directory:
+   mkdir static/uploads
+
+7. Run the application:
+   python app.py
+
+8. Access the system in your browser at:
+   http://localhost:5000
+
+9. For first-time setup:
+    - Register a new user account
+    - Add some test products

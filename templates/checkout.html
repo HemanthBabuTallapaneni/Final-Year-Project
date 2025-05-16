@@ -1,0 +1,21 @@
+<!-- templates/checkout.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="card shadow">
+        <div class="card-header">
+            <h2 class="mb-0">Checkout</h2>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="{{ url_for('checkout') }}">
+                <div class="mb-3">
+                    <label for="address" class="form-label">Delivery Address</label>
+                    <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Place Order</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

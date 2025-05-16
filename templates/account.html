@@ -1,0 +1,181 @@
+<!-- templates/account.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <!-- Left Sidebar -->
+        <div class="col-md-4">
+            <!-- Profile Card -->
+            <div class="card shadow mb-4">
+                <div class="card-body text-center">
+                    <img src="{{ url_for('static', filename='default-avatar.png') }}" 
+                         class="rounded-circle mb-3" style="width: 150px; height: 150px;" alt="Profile Picture">
+                    <h5 class="mb-0">{{ user.username }}</h5>
+                    <p class="text-muted">{{ user.email }}</p>
+                    <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                        Edit Profile
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Navigation Links -->
+            <div class="list-group shadow">
+                <a href="#" class="list-group-item list-group-item-action active">
+                    <i class="fas fa-user me-2"></i> Profile
+                </a>
+                <a href="#products" class="list-group-item list-group-item-action">
+                    <i class="fas fa-box me-2"></i> My Products
+                </a>
+                <a href="#orders" class="list-group-item list-group-item-action">
+                    <i class="fas fa-shopping-bag me-2"></i> Orders
+                </a>
+                <a href="{{ url_for('cart') }}" class="list-group-item list-group-item-action">
+                    <i class="fas fa-shopping-cart me-2"></i> Cart
+                </a>
+                <a href="#" class="list-group-item list-group-item-action">
+                    <i class="fas fa-cog me-2"></i> Settings
+                </a>
+            </div>
+        </div>
+        
+        <!-- Right Content -->
+        <div class="col-md-8">
+            <!-- Profile Information -->
+            <div class="card shadow mb-4" id="profile">
+                <div class="card-header">
+                    <h5 class="mb-0">Account Information</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('update_profile') }}">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Username</label>
+                                <input type="text" class="form-control" value="{{ user.username }}" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" name="email" value="{{ user.email }}" required>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">First Name</label>
+                                <input type="text" class="form-control" name="first_name" value="{{ user.first_name }}" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Last Name</label>
+                                <input type="text" class="form-control" name="last_name" value="{{ user.last_name }}" required>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- My Products Section -->
+            <div class="card shadow mb-4" id="products">
+                <div class="card-header">
+                    <h5 class="mb-0">My Products</h5>
+                </div>
+                <div class="card-body">
+                    {% if my_products %}
+                        <div class="list-group">
+                            {% for product in my_products %}
+                                <div class="list-group-item">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-3">
+                                            <img src="{{ product.image_url }}" alt="{{ product.name }}" 
+                                                 class="img-fluid rounded" style="max-height: 100px; object-fit: cover;">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h5 class="mb-1">{{ product.name }}</h5>
+                                            <p class="mb-1 text-muted">₹{{ "%.2f"|format(product.price) }}</p>
+                                        </div>
+                                        <div class="col-md-3 text-end">
+                                            <form action="{{ url_for('remove_product', product_id=product._id) }}" method="POST" class="d-inline">
+                                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                                    <i class="fas fa-trash me-1"></i>Remove
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted">You haven't added any products yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Orders Section -->
+            <div class="card shadow mb-4" id="orders">
+                <div class="card-header">
+                    <h5 class="mb-0">Orders</h5>
+                </div>
+                <div class="card-body">
+                    {% if orders %}
+                        <div class="list-group">
+                            {% for order in orders %}
+                                <div class="list-group-item">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-3">
+                                            <img src="{{ order.product_image_url }}" alt="{{ order.product_name }}" 
+                                                 class="img-fluid rounded" style="max-height: 100px; object-fit: cover;">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h5 class="mb-1">{{ order.product_name }}</h5>
+                                            <p class="mb-1 text-muted">Ordered by: {{ order.buyer_name }}</p>
+                                            <p class="mb-1 text-muted">Address: {{ order.buyer_address }}</p>
+                                            <p class="mb-1 text-muted">Quantity: {{ order.quantity }}</p>
+                                            <p class="mb-1 text-muted">Status: {{ order.status }}</p>
+                                            <p class="mb-1 text-muted">Order Date: {{ order.created_at }}</p>
+                                        </div>
+                                        <div class="col-md-3 text-end">
+                                            <span class="badge bg-success">{{ order.status }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted">No orders have been placed on your products yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Profile Modal -->
+<div class="modal fade" id="editProfileModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Profile</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{{ url_for('update_profile') }}">
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" name="email" value="{{ user.email }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">First Name</label>
+                        <input type="text" class="form-control" name="first_name" value="{{ user.first_name }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" class="form-control" name="last_name" value="{{ user.last_name }}" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
